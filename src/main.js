@@ -1,5 +1,13 @@
-import { createApp } from "vue";
-import App from "./App.vue";
-import router from "./router";
+import '@/assets/css/main.css';
+import 'vue-toastification/dist/index.css';
+import { createApp } from 'vue';
+import App from './App.vue';
+import Toast from 'vue-toastification';
+import moment from 'moment';
+import router from './router';
 
-createApp(App).use(router).mount("#app");
+const app = createApp(App);
+
+app.config.globalProperties.$moment = moment;
+
+app.use(router).use(Toast).mount('#app');
