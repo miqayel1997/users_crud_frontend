@@ -32,5 +32,8 @@ export default {
     },
     getPayments(userId) {
         return apiClient.get(`/users/${userId}/payments`);
+    },
+    addPayment(userId, amount) {
+        return apiClient.post(`/users/${userId}/payments`, { amount });
     }
 };

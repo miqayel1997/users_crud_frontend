@@ -92,6 +92,25 @@
                     {{ $moment(payment.date).format('YYYY-MM-DD HH:mm:ss') }}
                 </div>
             </div>
+
+            <form class="mt-4 flex gap-2" @submit.prevent="addPayment">
+                <input
+                    v-model="addPaymentAmount"
+                    class="border px-4 py-2 outline-none"
+                    maxlength="20"
+                    name="amount"
+                    placeholder="Amount"
+                    required=""
+                    type="number"
+                />
+
+                <button
+                    class="bg-blue-700 px-4 py-1 text-center text-white"
+                    type="submit"
+                >
+                    Add
+                </button>
+            </form>
         </div>
     </div>
 </template>
@@ -112,7 +131,8 @@ export default {
             user: null,
             form: {},
             errors: {},
-            payments: []
+            payments: [],
+            addPaymentAmount: ''
         };
     },
     mounted() {
@@ -161,6 +181,20 @@ export default {
             );
 
             this.payments = { ...data.data };
+        },
+        async addPayment() {
+            try {
+                await UserService.addPayment(
+                    this.$route.params.id,
+                    this.addPaymentAmount
+                );
+
+                this.addPaymentAmount = '';
+
+                this.fetchPayments();
+            } catch (error) {
+                //
+            }
         }
     }
 };
